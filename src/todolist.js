@@ -23,9 +23,7 @@ class ToDo extends Component {
         if (this.state.isCreate){
             result = (<EntryForm key="createForm" refresh={this.getEntry} />);
         }else{
-            result = <EntryForm/>
-            //const data = this.state.updateEntry;
-            //result= <EntryUpdate key={data._id} entry={data} refresh={this.getEntry}/>;
+            result = < EntryForm refresh={this.EntryForm}/>
         }
         return result;
     };
@@ -35,29 +33,28 @@ class ToDo extends Component {
     };
 
     render(){ 
-        console.log(this.state.entry)
+        console.log(this.state.entry);
         const displayEntry = this.state.entry.map((entry) => {
 
-                return (<div>
-                            {entry.Task}, {entry.Description}
+                return <div>
+                            TASK NAME: {entry.Task}, 
+                            DESCRIPTION: {entry.Description},
+                            COMPLETED ?:{entry.Completed ? 'done': 'not done'},
+                            {/* OTHER TASKS:{entry.othertasks} START HERE TO FIX THIS*/} 
                         </div> 
-                )
+                
         
         })      
 
-        console.log(this.state.entry);
+        
         return (
             <>
             <h2>TO-DO LIST</h2>
             {this.renderForm()}
             {displayEntry} 
-            
             </>
         )
     } 
-
-
-
 };
 
 export default ToDo;

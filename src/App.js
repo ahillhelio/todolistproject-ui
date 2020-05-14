@@ -1,11 +1,11 @@
 import React from 'react';
-import Task from './todolist';
+import ToDo from './todolist';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Task/>
+      <ToDo/>
     </div>
   );
 }

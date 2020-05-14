@@ -4,7 +4,8 @@ class EntryForm extends React.Component{
     state = {
         Task: "",
         Description: "",
-        Completed: true
+        Completed: true,
+        // othertasks: 
     }
 
     handleChange = ( { target} ) => {
@@ -22,18 +23,30 @@ class EntryForm extends React.Component{
             headers:{
                 'content-type': 'application/json'
             },
-            body: JSON.stringify([{Task : this.state.Task, Description : this.state.Description, Completed : completed }])
+            body: JSON.stringify([
+                {
+                    Task : this.state.Task, 
+                    Description : this.state.Description, 
+                    Completed : completed,
+                    othertasks: [
+                        {othertasks : this.state.othertasks}
+                    ]
+                }])  
+                // DO I NEED ] between { and ) ?
         })
         .then(this.props.refresh)
-        .then(() => this.setState({
+        .then(() => this.setState
+        ({
             Task: "",
             Description: "",
-            Completed: true
+            Completed: true,
+            // othertasks:
         }));
     }
         render() {
             return(
                 <form onSubmit={this.handleSubmit}>
+
                     <input 
                     name="Task" 
                     type="text"
@@ -45,6 +58,12 @@ class EntryForm extends React.Component{
                     type="text"
                     value={this.state.Description}
                     placeholder= "Describe Task"
+                    onChange={this.handleChange}/>
+                    <input 
+                    name="Sub-Tasks" 
+                    type="text"
+                    value={this.state.othertasks}
+                    placeholder= "Sub-Tasks"
                     onChange={this.handleChange}/>
 
                     <input type="submit" value="Add Task"/>
