@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EntryForm from './EntryForm';
+import DeleteEntry from './deleteEntry';
 
 class ToDo extends Component {
     constructor(props){
@@ -16,6 +17,15 @@ class ToDo extends Component {
         fetch(`${process.env.REACT_APP_API_URL}/api/todolist`) 
         .then(response => response.json())
         .then(data => this.setState( {entry : data, isCreate: true } ));
+    };
+
+    deleteEntry = (id) => {
+        fetch(`${process.env.REACT_APP_API_URL}/api/todolist/${id}`, {
+            method: 'DELETE'
+        }) 
+        .then(response => response.json())
+        .then(console.log)
+        .then(this.getFilm);
     };
 
     renderForm = () => {
@@ -35,12 +45,21 @@ class ToDo extends Component {
     render(){ 
         console.log(this.state.entry);
         const displayEntry = this.state.entry.map((entry) => {
-
+                const displayOtherTasks = entry.othertasks.map((othertask) => {
+                    return (<div>
+                            {othertask}
+                        {/* this is the part that gets tricky */}
+                    </div>)
+                })
+            
                 return <div>
-                            TASK NAME: {entry.Task}, 
-                            DESCRIPTION: {entry.Description},
-                            COMPLETED ?:{entry.Completed ? 'done': 'not done'},
-                            {/* OTHER TASKS:{entry.othertasks} START HERE TO FIX THIS*/} 
+                            TASK NAME: {entry.Task} <br></br>
+                            DESCRIPTION: {entry.Description}<br></br>
+                            OTHER TASKS: {displayOtherTasks}
+                        <br></br>
+                            <DeleteEntry entry={entry} 
+                            deleteEntry={this.deleteEntry}
+                            />
                         </div> 
                 
         

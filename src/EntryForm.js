@@ -4,8 +4,8 @@ class EntryForm extends React.Component{
     state = {
         Task: "",
         Description: "",
-        Completed: true,
-        // othertasks: 
+        // Completed: true,
+        othertasks: ""
     }
 
     handleChange = ( { target} ) => {
@@ -16,7 +16,7 @@ class EntryForm extends React.Component{
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const completed= this.state.Completed === true;
+        // const completed= this.state.Completed === true;
 
         fetch(`${process.env.REACT_APP_API_URL}/api/todolist`, {
             method: "POST",
@@ -27,10 +27,8 @@ class EntryForm extends React.Component{
                 {
                     Task : this.state.Task, 
                     Description : this.state.Description, 
-                    Completed : completed,
-                    othertasks: [
-                        {othertasks : this.state.othertasks}
-                    ]
+                    // Completed : completed,
+                    othertasks: this.state.othertasks
                 }])  
                 // DO I NEED ] between { and ) ?
         })
@@ -39,8 +37,8 @@ class EntryForm extends React.Component{
         ({
             Task: "",
             Description: "",
-            Completed: true,
-            // othertasks:
+            // Completed: true,
+            othertasks: "" 
         }));
     }
         render() {
@@ -53,12 +51,14 @@ class EntryForm extends React.Component{
                     value={this.state.Task}
                     placeholder= "Task to do"
                     onChange={this.handleChange}/>
+
                     <input 
                     name="Description" 
                     type="text"
                     value={this.state.Description}
                     placeholder= "Describe Task"
                     onChange={this.handleChange}/>
+
                     <input 
                     name="Sub-Tasks" 
                     type="text"
@@ -67,6 +67,7 @@ class EntryForm extends React.Component{
                     onChange={this.handleChange}/>
 
                     <input type="submit" value="Add Task"/>
+
                 </form>
             )
         }
