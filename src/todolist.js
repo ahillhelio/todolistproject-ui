@@ -7,7 +7,10 @@ class ToDo extends Component {
         super(props);
         this.state ={
             entry : [
-
+                {Task: "",
+                Description: "",
+                othertasks: [],
+                subtask: ""}
             ],
             isCreate : true,
         }
@@ -50,13 +53,11 @@ class ToDo extends Component {
         this.setState({
           [name]: value
         });
-
-        // othertask.completed=!othertask.completed
     }
 
     render(){ 
         console.log(this.state.entry);
-        const displayEntry = this.state.entry.map((entry) => {
+        const displayEntry = this.state.entry.map((entry, index) => {
                 const displayOtherTasks = entry.othertasks.map((othertask) => {
                     let completedString; 
                     if (!othertask.completed) {
@@ -68,12 +69,11 @@ class ToDo extends Component {
                            {othertask.subtask} {completedString} 
                            <input
                                 name = "isCreate"
-                                type="checkbox"
+                                type= "checkbox"
                                 checked={othertask.completed}
-                                onChange={e=> this.handleInputChange(othertask)}>
+                                onChange={this.handleInputChange}>
                            </input>
-
-                            </div>)
+                           </div>)
                 })
             
                 return <div>
