@@ -4,19 +4,23 @@ class EntryForm extends React.Component{
     state = {
         Task: "",
         Description: "",
-        // Completed: true,
-        othertasks: ""
+        othertasks: [],
+        subtask: ""
     }
 
     handleChange = ( { target} ) => {
         const key = target.name;
+        this.state.othertasks=this.state.subtask.split(",").map((subtask) => {
+            return {
+                completed: false,
+                subtask: subtask
+            }
+        })
         this.setState({ [key] : target.value }, () => console.log(this.state[key]));
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-
-        // const completed= this.state.Completed === true;
 
         fetch(`${process.env.REACT_APP_API_URL}/api/todolist`, {
             method: "POST",
@@ -27,7 +31,6 @@ class EntryForm extends React.Component{
                 {
                     Task : this.state.Task, 
                     Description : this.state.Description, 
-                    // Completed : completed,
                     othertasks: this.state.othertasks
                 }])  
                 // DO I NEED ] between { and ) ?
@@ -37,8 +40,7 @@ class EntryForm extends React.Component{
         ({
             Task: "",
             Description: "",
-            // Completed: true,
-            othertasks: "" 
+            othertasks: []
         }));
     }
         render() {
@@ -60,9 +62,9 @@ class EntryForm extends React.Component{
                     onChange={this.handleChange}/>
 
                     <input 
-                    name="Sub-Tasks" 
+                    name="subtask" 
                     type="text"
-                    value={this.state.othertasks}
+                    value={this.state.subtask}
                     placeholder= "Sub-Tasks"
                     onChange={this.handleChange}/>
 
